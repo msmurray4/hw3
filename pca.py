@@ -1,4 +1,4 @@
-import numpy
+
 from scipy.linalg import eigh
 import numpy as np
 import matplotlib.pyplot as plt
@@ -39,13 +39,28 @@ def get_eig_perc(S, perc):
     return the_eigval, the_eigvec
 
 
-#def project_image(img, U):
+def project_image(img, U):
     # TODO: add your code here
+    img = np.dot( np.transpose(img), U)
+    return np.dot(img, np.transpose(U))
 
 
-
-#def display_image(orig, proj):
+def display_image(orig, proj):
     # TODO: add your code here
+    #orig = np.transpose(orig)
+    orig = np.reshape(orig, (32, 32))
+    orig = np.transpose(orig)
+    proj = np.reshape(proj, (32, 32))
+    proj = np.transpose(proj)
+    fig, (orig_display, proj_display) = plt.subplots(ncols=2, )
+    orig_display.set_title("Original")
+    orig_ret = orig_display.imshow(orig, aspect='equal')
+    fig.colorbar(orig_ret, ax=orig_display)
+    proj_display.set_title("Projection")
+    proj_ret = proj_display.imshow(proj, aspect='equal')
+    fig.colorbar(proj_ret, ax=proj_display)
+    plt.show()
+
 
 def main():
         #centered_data = load_and_center_dataset('YaleB_32x32.npy')
@@ -78,9 +93,9 @@ def main():
         Lambda, U = get_eig(S, 2)
         #print(x[0][0]*U[0][0])
         #print(x[0])
-        print(len(x[0]))
+        #print(len(x[0]))
         #print( U[0])
-        print( len(U))
+        #print( len(U))
         #print(x[0]* U)
         #temp = []
         #j = 0
@@ -88,20 +103,25 @@ def main():
         #    temp[j] = np.dot(x[0][j], U[j])
 
         #print(x[0][0] * U[0][0] + x[0][0] * U[0][1])
-        sum = 0
-        z = np.transpose(U)
-        for j in range(1023):
-            sum+= x[0][0] * z[0][j] + x[0][0] * z[1][j]
-        print( sum)
-        print(U[0])
-        print(np.transpose(U)[0])
-        print(len(np.transpose(U)[0]))
+        #sum = 0
+        #z = np.transpose(U)
+        #for j in range(1023):
+        #    sum+= x[0][0] * z[0][j] + x[0][0] * z[1][j]
+        #print( sum)
+        #print(U[0])
+        #print(np.transpose(U)[0])
+        #print(len(np.transpose(U)[0]))
         #print ( len ( np.transpose(x[0])))
         #print(U)
         #print(np.dot(x[0], np.transpose(U[0])))
         #projection = project_image(x[0], U)
         #print(projection)
         #display_image(x[0], projection)
+        projection = project_image(x[0], U)
+        print(projection)
+        #print(np.reshape(projection, (32, 32)))
+        display_image(x[0], projection)
+
 
 if __name__ == "__main__":
     main()
