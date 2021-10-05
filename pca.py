@@ -51,16 +51,3 @@ def display_image(orig, proj):
     proj_ret = proj_display.imshow(proj, aspect='equal')
     fig.colorbar(proj_ret, ax=proj_display)
     plt.show()
-
-
-def main():
-        x = load_and_center_dataset('YaleB_32x32.npy')
-        S = get_covariance(x)
-        Lambda, U = get_eig(S, 2)
-        projection = project_image(x[0], U)
-        print(projection)
-        display_image(x[0], projection)
-
-
-if __name__ == "__main__":
-    main()
